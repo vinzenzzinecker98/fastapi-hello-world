@@ -2,8 +2,14 @@
 from fastapi import FastAPI, HTTPException
 import os 
 from dotenv import load_dotenv
-load_dotenv()
-our_key = os.environ["OUR_API_KEY"]
+
+def get_key():
+    load_dotenv()
+    key =  os.environ["OUR_API_KEY"]
+    print(f"loaded key {key}")
+    return key
+
+our_key = get_key()
 
 app = FastAPI(
               swagger_ui_parameters={"tryItOutEnabled": True},
@@ -11,6 +17,7 @@ app = FastAPI(
 
 @app.post("/hello_world")
 def hello_world(req:str, key:str):
+    print(f"got request, key is {key}")
     if key == our_key:
         return f"hello world, got your {req}"
     else:
