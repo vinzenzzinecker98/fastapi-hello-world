@@ -19,6 +19,8 @@ app = FastAPI(
 def hello_world(req:str, key:str):
     print(f"got request, key is {key}")
     if key == our_key:
+        print("key is fine")
         return f"hello world, got your {req}"
     else:
+        print("key is absolutely not fine")
         raise HTTPException(status_code=401, detail="No key provided")
